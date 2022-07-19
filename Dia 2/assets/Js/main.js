@@ -9,7 +9,7 @@ const circles = document.querySelectorAll('.circle')
 let currentActive = 1
 
 //Se crea el siguiente evento para que cuando uno de clic en el boton next vaya contabilizando de acuerdo a su numeracion
-next.addEventListener('click', () =>{
+next.addEventListener('click', () => {
     currentActive++
 
     //vamos a crear un if para limitar el contador de circulos y no continue contando
@@ -17,5 +17,48 @@ next.addEventListener('click', () =>{
         currentActive = circles.length
     }
     
+    update();
     
 })
+
+prev.addEventListener('click', () => {
+    currentActive--
+
+    if (currentActive < 1) {
+        currentActive = 1
+    }
+
+    update()
+})
+
+
+function  update() {
+    circles.forEach((circle, idx) => {
+        if (idx < currentActive) {
+            circle.classList.add('active')
+        }else{
+            circle.classList.remove('active')
+        }
+    })
+
+
+    const actives = document.querySelectorAll('.active')
+
+    progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%'
+
+    if (currentActive === 1) {
+        prev.disabled = true
+    } else if(currentActive === circles.length){
+        next.disabled = true
+    }else{
+        prev.disabled = false
+        next.disabled = false
+    }
+}
+
+
+
+
+
+
+
